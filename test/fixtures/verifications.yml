@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  verification_code: MyString
+  is_verified: 
+  user_id: 
+
+two:
+  verification_code: MyString
+  is_verified: 
+  user_id: 

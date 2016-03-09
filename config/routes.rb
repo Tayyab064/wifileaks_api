@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :verifications, except: [:new, :edit]
   resources :users, except: [:new, :edit]
 
+  root 'users#index'
   get '/confirm_email/:token', to: 'users#verify_email'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

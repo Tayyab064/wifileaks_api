@@ -22,5 +22,12 @@ test:
   database: wifileaks_api_test
 
 production:
-  <<: *default
-  database: wifileaks_api_production
+  adapter: postgresql
+  encoding: unicode
+  username: rvivkfkfykdima
+  password: HHXn9NFCpmdaBl8RT28waaWoYQ
+  hostname: ec2-107-21-101-67.compute-1.amazonaws.com
+  pool: 5
+  port: 5432
+  url: postgres://rvivkfkfykdima:HHXn9NFCpmdaBl8RT28waaWoYQ@ec2-107-21-101-67.compute-1.amazonaws.com:5432/des6c991h0qm3q
+  database: des6c991h0qm3q

@@ -14,6 +14,30 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+
+  config.action_mailer.default_url_options = { :host => 'https://wifi-api.herokuapp.com' }
+
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {:address => "localhost", :port => 1025}
+
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
+
+
+  config.action_mailer.smtp_settings = {
+  :address => "smtpout.asia.secureserver.net",
+  :port => 3535,
+  :domain => 'www.wifiexplore.com',
+  :authentication => :plain,   # I've also tried :login
+  :enable_starttls_auto => true,  # Also tried tls => true
+  :user_name => 'noreply@wifiexplore.com',
+  :password => 'AG@pass1',
+  :openssl_verify_mode => 'none'
+  } #I've also tried having the attribute :domain =>
+
+
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
   # For large-scale production use, consider using a caching reverse proxy like

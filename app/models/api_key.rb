@@ -3,6 +3,9 @@ class ApiKey < ActiveRecord::Base
 
   before_create :generate_token
 
+
+
+
   private
 
   def generate_token
@@ -10,4 +13,6 @@ class ApiKey < ActiveRecord::Base
       self.token = SecureRandom.hex.to_s
     end while self.class.exists?(token: token)
   end
+
+  
 end

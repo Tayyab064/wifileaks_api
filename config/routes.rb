@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  resources :verifications, except: [:new, :edit]
-  resources :users, except: [:new, :edit]
+  resources :users, except: [:new, :edit, :show]
 
-  root 'users#index'
-  get '/confirm_email/:token', to: 'users#verify_email'
+
+  scope "verify" do
+    post 'mobile' => 'verifications#mobile'
+    get 'email/:email_token' => 'verifications#email'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

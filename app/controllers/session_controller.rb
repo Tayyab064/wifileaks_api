@@ -20,8 +20,8 @@ class SessionController < ApplicationController
 
   def destroy
 
-  @current_user.api_key.destroy
-  head :no_content
+    @current_user.api_key.destroy
+    head :no_content
 
   end
 

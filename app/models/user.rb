@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 	after_create :create_tokens
 
 	##Validation
-	validates_presence_of :first_name,:last_name,:email, :mobile_number
+	validates_presence_of :first_name,:last_name,:email
 	validates_uniqueness_of :email
 	validates :first_name ,:last_name, length: {within: 2..15}
 	validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 	def create_tokens
 	  	ApiKey.create :user => self
 	  	Verification.create :user => self
+	  	#move it on new method
 	end
 
 	

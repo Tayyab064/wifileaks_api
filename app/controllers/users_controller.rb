@@ -2,37 +2,37 @@ class UsersController < ApplicationController
 	before_filter :restrict_access, except: [:create,:verify_email]
 
 	def index
-		render json: @current_user, except: :password_digest
+		render json: @current_user
 	end
 
 	def create
 		@user = User.new(user_params)
 
 		#background jobs
-	if @user.save
-		render json: @user.api_key.token.to_json, status: :created
-	  	UserMailer.registration_confirmation(@user).deliver_later
-	else
-	  render json: @user.errors, status: :unprocessable_entity
-	end
+		if @user.save
+			render json: @user, serializer: UserTokenSerializer, status: :created
+		  	UserMailer.registration_confirmation(@user).deliver_later
+		else
+		  	render json: @user.errors, status: :unprocessable_entity
+		end
 	end
 
 	def update
-	@user = @current_user
+		@user = @current_user
 
-	if @user.update(user_params)
-	  render json: @user, except: :password_digest, status: :accepted
-	else
-	  render json: @user.errors, status: :unprocessable_entity
-	end
+		if @user.update(user_params)
+		  render json: @user, status: :accepted
+		else
+		  render json: @user.errors, status: :unprocessable_entity
+		end
 	end
 
 	
 
 	def destroy
-	@user = @current_user
-	@user.destroy
-	head :no_content
+		@user = @current_user
+		@user.destroy
+		head :no_content
 	end
 
 

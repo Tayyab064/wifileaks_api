@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
 
   scope "verify" do
-    post 'mobile' => 'verifications#mobile'
+    post 'mobile' => 'verifications#mobile_verify'
     get 'email/:email_token' => 'verifications#email'
+    patch 'mobile' => 'verifications#mobile_generate'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

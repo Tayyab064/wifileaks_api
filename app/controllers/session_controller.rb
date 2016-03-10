@@ -7,12 +7,12 @@ class SessionController < ApplicationController
       if user.authenticate(params[:password]) && user.api_key.nil?
         @current_user = user
         @current_user.create_api_key
-        render json: @current_user.api_key.token.to_json, status: 200
+        render json: @current_user,serializer: UserTokenSerializer, status: :ok
       else
-        render json: "Password/Token issue", status: 401
+        render json:{'message' => "Password/Token issue"}, status: :unauthorized
       end
     else
-      render json: "User doesn't exists", status: 401
+      render json:{'message' => "User doesn't exists"}, status: :unauthorized
     end
     #  render json: @current_user.to_json
   end

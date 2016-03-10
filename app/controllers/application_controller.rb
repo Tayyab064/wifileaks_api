@@ -2,6 +2,7 @@
 class ApplicationController < ActionController::API
 
 	include ActionController::HttpAuthentication::Token::ControllerMethods
+	include ActionController::Serialization
 
 
 
@@ -10,7 +11,7 @@ class ApplicationController < ActionController::API
 
 	def restrict_access
 		unless restrict_access_to_user
-			render json: 'Invalid Api tokken',status: 401
+			render json:{'message' => 'Invalid Api tokken' },status: :unauthorized
 			return 
 		end
 		@current_user = @api_key.user if @api_key

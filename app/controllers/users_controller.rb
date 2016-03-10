@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 	def update
 		@user = @current_user
 
-		if @user.update(user_params)
+		if @user.update(user_update_params)
 		  render json: @user, status: :accepted
 		else
 		  render json: @user.errors, status: :unprocessable_entity
@@ -42,6 +42,11 @@ class UsersController < ApplicationController
 
 	  def user_params
 	    params.require(:user).permit(:first_name,:last_name, :email,:mobile_number, :password,
+	                                 :password_confirmation)
+	  end
+
+	  def user_update_params
+	    params.require(:user).permit(:first_name,:last_name,:mobile_number, :password,
 	                                 :password_confirmation)
 	  end
 end

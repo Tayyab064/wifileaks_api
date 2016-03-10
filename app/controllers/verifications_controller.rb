@@ -20,7 +20,7 @@ class VerificationsController < ApplicationController
 #background jobs
 #fogfot pass
 #email templete
-
+verify/mobile
 	def email
 		if token = Verification.find_by_email_token(params[:email_token])
 			if token.user
@@ -36,25 +36,31 @@ class VerificationsController < ApplicationController
 	end
 
 	def mobile_generate
-		@current_user.verification.mob_verification_code =  1_000_000 + rand(10_000_000 - 1_000_000)
+		
 		@current_user.mobile_number = params[:mobile_number]
-	  	@current_user.save
+	  	if @current_user.save
+	  		verification = @current_user.verification
+			verification.mob_verification_code = 1_000_000 + rand(10_000_000 - 1_000_000)
+			verification.save
+	  	
 
-		to = @current_user.mobile_number
+
+			to = @current_user.mobile_number
 
 
-		account_sid = 'AC89e76904587c00d004e844faed1a3962' 
-		auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
+			account_sid = 'AC89e76904587c00d004e844faed1a3962' 
+			auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
 
-		@twilio_client = Twilio::REST::Client.new account_sid, auth_token
-		@twilio_client.account.sms.messages.create(
-		:from => "+12019774712", #TODO: change this number
-		:to => to,
-		:body => "Your verification code is #{@current_user.verification.mob_verification_code}."
-		)
-		render :json @current_user
-		return
+			@twilio_client = Twilio::REST::Client.new account_sid, auth_token
+			@twilio_client.account.sms.messages.create(
+			:from => "+12019774712", #TODO: change this number
+			:to => to,
+			:body => "Your verification code is #{@current_user.verification.mob_verification_code}."
+			)
+			render json: @current_user
+			return
 		#end of mobile
+		end
 	end
 
 

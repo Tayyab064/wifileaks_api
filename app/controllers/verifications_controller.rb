@@ -20,7 +20,8 @@ class VerificationsController < ApplicationController
 #background jobs
 #fogfot pass
 #email templete
-verify/mobile
+#verify/mobile
+
 	def email
 		if token = Verification.find_by_email_token(params[:email_token])
 			if token.user

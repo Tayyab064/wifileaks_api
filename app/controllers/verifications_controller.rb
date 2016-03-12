@@ -1,5 +1,5 @@
 class VerificationsController < ApplicationController
-	before_filter :restrict_access, except: [:email]
+	before_filter :restrict_access, except: [:email ,:resend_email_confirmation ,:reset_password]
 
 	def mobile_verify
 		p params.inspect
@@ -8,6 +8,7 @@ class VerificationsController < ApplicationController
 			token.user.save
 			token.destroy
 			render json:{'message' => 'Thank you for verifying your mobile number.'},status: :ok
+			#render html: '<h3 style="text-align: center">Thank you for verifying your mobile number.</h3>'
 			return
 	    else
 			render json:{'message' => 'Invalid mobile verification code.'},status: :unauthorized
@@ -29,7 +30,9 @@ class VerificationsController < ApplicationController
 				token.email_token = " "
 				token.user.save
 				token.save
-				render json:{'message' => 'Thank you for verifying your email.'},status: :ok
+				#render json:{'message' => 'Thank you for verifying your email.'},status: :ok
+				#render html: '<h3 style="text-align=center">Thank you for verifying your email.</h3>'.html_safe, status: :ok
+				redirect_to '/email_confirmation.html'
 			end
 		else
 			render json: {'message' => 'Invalid email verification token.'},status: :unauthorized
@@ -39,30 +42,55 @@ class VerificationsController < ApplicationController
 	def mobile_generate
 		
 		@current_user.mobile_number = params[:mobile_number]
-	  	if @current_user.save
-	  		verification = @current_user.verification
-			verification.mob_verification_code = 1_000_000 + rand(10_000_000 - 1_000_000)
-			verification.save
-	  	
+		if @current_user.number_verified
+			render json: {'message' => "Mobile number already verified"}, status: :ok
+	  	else
+	  		if @current_user.save
+		  		verification = @current_user.verification
+				verification.mob_verification_code = 1_000_000 + rand(10_000_000 - 1_000_000)
+				verification.save
+		  	
 
 
-			to = @current_user.mobile_number
+				to = @current_user.mobile_number
 
 
-			account_sid = 'AC89e76904587c00d004e844faed1a3962' 
-			auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
+				account_sid = 'AC89e76904587c00d004e844faed1a3962' 
+				auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
 
-			@twilio_client = Twilio::REST::Client.new account_sid, auth_token
-			@twilio_client.account.sms.messages.create(
-			:from => "+12019774712", #TODO: change this number
-			:to => to,
-			:body => "Your verification code is #{@current_user.verification.mob_verification_code}."
-			)
-			render json: @current_user
-			return
-		#end of mobile
-		end
+				@twilio_client = Twilio::REST::Client.new account_sid, auth_token
+				@twilio_client.account.sms.messages.create(
+				:from => "+12019774712", #TODO: change this number
+				:to => to,
+				:body => "Your verification code is #{@current_user.verification.mob_verification_code}."
+				)
+				render json: @current_user
+				return
+			#end of mobile
+			end
+	  	end
 	end
 
+	def resend_email_confirmation
+		if @user = User.find_by_email(params[:email])
+			if @user.email_verified == true
+				render json: {'message' => "Email already verified"}, status: :ok
+			else
+				render json: {'message' => "Sending Email"}, status: :ok
+				UserMailer.registration_confirmation(@user).deliver_later
+			end
+	    else
+	      render json: {'message' => "Invalid email"}, status: :unauthorized
+	    end
+	end
+
+	def reset_password
+		if token = Verification.find_by_forgot_password_token(params[:forgot_password_token])
+			@user = token.user
+			redirect_to '/reset_password.html'
+		else
+			render json: {'message' => "Invalid forgot password token"}, status: :unauthorized
+		end
+	end
 
 end

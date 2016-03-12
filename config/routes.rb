@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  resources :users, except: [:new, :edit, :show]
+  resources :users , except: [:new, :edit, :show]
 
-
-  scope "verify" do
-    post 'mobile' => 'verifications#mobile_verify'
-    get 'email/:email_token' => 'verifications#email'
-    patch 'mobile' => 'verifications#mobile_generate'
+  scope "user" do
+    post 'signin' => 'session#create'
+    post 'signout' => 'session#destroy'
+    post 'forgot_password' => 'session#forgot_password'
+    get 'reset_password/:forgot_password_token' => 'verifications#reset_password'
+    scope "verify" do
+      post 'mobile' => 'verifications#mobile_verify'
+      get 'email/:email_token' => 'verifications#email'
+      post 'email' => 'verifications#resend_email_confirmation'
+      patch 'mobile' => 'verifications#mobile_generate'
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

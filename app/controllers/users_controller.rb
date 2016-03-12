@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :restrict_access, except: [:create,:verify_email]
+	before_filter :restrict_access, except: [:create]
 
 	def index
 		render json: @current_user
@@ -34,8 +34,6 @@ class UsersController < ApplicationController
 		@user.destroy
 		head :no_content
 	end
-
-
 
 
 	private

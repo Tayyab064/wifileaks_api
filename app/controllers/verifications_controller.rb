@@ -26,9 +26,9 @@ class VerificationsController < ApplicationController
 	def email
 		if token = Verification.find_by_email_token(params[:email_token])
 			if token.user
-				token.user.email_verified = true
-				token.email_token = " "
-				token.user.save
+				#token.user.email_verified = true
+				token.email_token = nil
+				token.user.update_attribute(:email_verified, true)
 				token.save
 				#render json:{'message' => 'Thank you for verifying your email.'},status: :ok
 				#render html: '<h3 style="text-align=center">Thank you for verifying your email.</h3>'.html_safe, status: :ok

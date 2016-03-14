@@ -4,8 +4,8 @@ class VerificationsController < ApplicationController
 	def mobile_verify
 		p params.inspect
 		if token = Verification.find_by_mob_verification_code(params[:mobile_token])
-			token.user.number_verified = true
-			token.user.save
+			user = token.user
+			user.update_attribute(:number_verified, true)
 			token.destroy
 			render json:{'message' => 'Thank you for verifying your mobile number.'},status: :ok
 			#render html: '<h3 style="text-align: center">Thank you for verifying your mobile number.</h3>'
@@ -41,33 +41,32 @@ class VerificationsController < ApplicationController
 
 	def mobile_generate
 		
-		@current_user.mobile_number = params[:mobile_number]
+		@mob_number = params[:mobile_number]
 		if @current_user.number_verified
 			render json: {'message' => "Mobile number already verified"}, status: :ok
 	  	else
-	  		if @current_user.save
-		  		verification = @current_user.verification
-				verification.mob_verification_code = 1_000_000 + rand(10_000_000 - 1_000_000)
-				verification.save
-		  	
+			@current_user.update_attribute(:mobile_number,@mob_number)
+	  		verification = @current_user.verification
+			verification.mob_verification_code = 1_000_000 + rand(10_000_000 - 1_000_000)
+			verification.save
+
+	  	
+
+			to = @current_user.mobile_number
 
 
-				to = @current_user.mobile_number
+			account_sid = 'AC89e76904587c00d004e844faed1a3962' 
+			auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
 
-
-				account_sid = 'AC89e76904587c00d004e844faed1a3962' 
-				auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
-
-				@twilio_client = Twilio::REST::Client.new account_sid, auth_token
-				@twilio_client.account.sms.messages.create(
-				:from => "+12019774712", #TODO: change this number
-				:to => to,
-				:body => "Your verification code is #{@current_user.verification.mob_verification_code}."
-				)
-				render json: @current_user
-				return
-			#end of mobile
-			end
+			@twilio_client = Twilio::REST::Client.new account_sid, auth_token
+			@twilio_client.account.sms.messages.create(
+			:from => "+12019774712", #TODO: change this number
+			:to => to,
+			:body => "Your verification code is #{@current_user.verification.mob_verification_code}."
+			)
+			render json: @current_user
+			return
+		#end of mobile
 	  	end
 	end
 

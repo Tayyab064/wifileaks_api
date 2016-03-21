@@ -1,5 +1,5 @@
 class VerificationsController < ApplicationController
-	before_filter :restrict_access, except: [:email ,:resend_email_confirmation ,:reset_password]
+	before_filter :restrict_access, except: [:email ,:reset_password]
 
 	def mobile_verify
 		p params.inspect
@@ -71,15 +71,13 @@ class VerificationsController < ApplicationController
 	end
 
 	def resend_email_confirmation
-		if @user = User.find_by_email(params[:email])
+		if @user = @current_user
 			if @user.email_verified == true
 				render json: {'message' => "Email already verified"}, status: :ok
 			else
 				render json: {'message' => "Sending Email"}, status: :ok
 				UserMailer.registration_confirmation(@user).deliver_later
 			end
-	    else
-	      render json: {'message' => "Invalid email"}, status: :unauthorized
 	    end
 	end
 

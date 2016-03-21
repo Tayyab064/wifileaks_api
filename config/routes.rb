@@ -5,11 +5,11 @@ Rails.application.routes.draw do
     post 'signin' => 'session#create'
     post 'signout' => 'session#destroy'
     post 'forgot_password' => 'session#forgot_password'
+    get 'email' => 'verifications#resend_email_confirmation'
     get 'reset_password/:forgot_password_token' => 'verifications#reset_password'
     scope "verify" do
       post 'mobile' => 'verifications#mobile_verify'
       get 'email/:email_token' => 'verifications#email'
-      post 'email' => 'verifications#resend_email_confirmation'
       patch 'mobile' => 'verifications#mobile_generate'
     end
   end

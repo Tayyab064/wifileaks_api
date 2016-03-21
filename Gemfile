@@ -18,6 +18,8 @@ gem 'twilio-ruby', '~> 4.11.1'
 
 gem 'phonelib'
 
+gem 'geocoder'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

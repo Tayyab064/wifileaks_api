@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  resources :wifis, except: [:new, :edit, :show]
   resources :users , except: [:new, :edit, :show]
+
+  scope "wifi" do
+    get 'near' => 'wifis#near_wifis'
+  end
 
   scope "user" do
     post 'signin' => 'session#create'

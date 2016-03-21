@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
 	has_one :api_key, dependent: :destroy
 	has_one :verification, dependent: :destroy
+	has_many :wifis, dependent: :destroy
 
 	#scope :is_email_verified, where(email_verified: true)
 	#scope :is_number_verified, where(number_verified: true)

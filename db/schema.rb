@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311134920) do
+ActiveRecord::Schema.define(version: 20160321111122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,20 @@ ActiveRecord::Schema.define(version: 20160311134920) do
 
   add_index "verifications", ["user_id"], name: "index_verifications_on_user_id", using: :btree
 
+  create_table "wifis", force: :cascade do |t|
+    t.float    "lat"
+    t.float    "long"
+    t.string   "address"
+    t.string   "name"
+    t.string   "password"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "wifis", ["user_id"], name: "index_wifis_on_user_id", using: :btree
+
   add_foreign_key "api_keys", "users"
   add_foreign_key "verifications", "users"
+  add_foreign_key "wifis", "users"
 end

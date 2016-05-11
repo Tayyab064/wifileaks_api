@@ -1,3 +1,3 @@
 class WifiSerializer < ActiveModel::Serializer
-  attributes :lat , :long , :address , :name
+  attributes :id , :lat , :long , :address , :name
 end

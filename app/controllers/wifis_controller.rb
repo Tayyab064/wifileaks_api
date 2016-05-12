@@ -25,8 +25,6 @@ class WifisController < ApplicationController
 		end
 	end
 
-	
-
 	def destroy
 		@wifi = @current_user.wifis.find(params[:id])
 		@wifi.destroy

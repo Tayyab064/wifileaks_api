@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  resources :connections, except: [:new, :edit , :show]
   resources :wifis, except: [:new, :edit, :show]
   resources :users , except: [:new, :edit, :show]
 
   scope "wifi" do
     get 'near' => 'wifis#near_wifis'
+
   end
 
   scope "user" do
@@ -17,6 +19,10 @@ Rails.application.routes.draw do
       get 'email/:email_token' => 'verifications#email'
       patch 'mobile' => 'verifications#mobile_generate'
     end
+  end
+
+  scope "connections" do
+    post 'rating/:id' => 'connections#rate'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -11,15 +11,20 @@ class ConnectionsController < ApplicationController
 		@connection = Connection.create(connection_params)
 		@connection.user_id = @current_user.id
 		if @connection.save
-			render json: @connection , serializer: ConnectionBillSerializer , status: :created
+			render json: @connection ,  status: :created
 		else
 			render json: @connection.errors , status: :unprocessable_entity
 		end
 	end
 
-	def destroy
-		if @connect.disconnected_at.nil? && params[:data].present?
-			@connect.update(disconnected_at: Time.now , data: params[:data])
+	/def destroy
+		if @connect.disconnected_at.nil? && params[:download_data].present?
+			if params[:upload_data].present?
+				upload_data = params[:upload_data]
+			else
+				upload_data = 0.0
+			end
+			@connect.update(disconnected_at: Time.now , download_data: params[:data])
 		end
 		render json: @connect  , status: :ok
 	end
@@ -35,11 +40,11 @@ class ConnectionsController < ApplicationController
 		else
 			render json: {'message' => 'Params are missing!'} , status: :unprocessable_entity
 		end
-	end
+	end/
 
 	private
 	def connection_params
-		params.require(:connection).permit(:wifi_id)
+		params.require(:connection).permit(:wifi_id , :download_data , :upload_data , :connected_at , :disconnected_at)
 	end
 
 	def set_connection

@@ -6,7 +6,9 @@ class ConnectionSerializer < ActiveModel::Serializer
   end
 
   def connected_at
-  	object.created_at.strftime("%I:%M%p")
+  	unless object.connected_at.nil?
+     object.connected_at.strftime("%I:%M%p")
+    end
   end
 
   def disconnected_at
@@ -16,8 +18,8 @@ class ConnectionSerializer < ActiveModel::Serializer
   end
 
   def bill
-    unless object.data.nil?
-     object.data * 0.8
+    unless object.download_data.nil?
+     (object.download_data * 0.8) + (object.upload_data * 1.2)
     end
   end
 end

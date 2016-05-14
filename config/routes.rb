@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
-  resources :connections, except: [:new, :edit , :show]
   resources :wifis, except: [:new, :edit, :show]
   resources :users , except: [:new, :edit, :show]
 
   scope "wifi" do
     get 'near' => 'wifis#near_wifis'
-
+    resources :connections, only: [:index , :create]
+    scope "connections" do
+      resources :ratings, only: [:create]
+    end
   end
 
   scope "user" do
+    resources :payment_methods, only: [:create , :index]
     post 'signin' => 'session#create'
     post 'signout' => 'session#destroy'
     post 'forgot_password' => 'session#forgot_password'
@@ -19,6 +22,8 @@ Rails.application.routes.draw do
       get 'email/:email_token' => 'verifications#email'
       patch 'mobile' => 'verifications#mobile_generate'
     end
+    put 'payment_methods' => 'payment_methods#update'
+    patch 'payment_methods' => 'payment_methods#update'
   end
 
   scope "connections" do

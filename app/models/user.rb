@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 	has_one :verification, dependent: :destroy
 	has_many :wifis, dependent: :destroy
 	has_many :connections , dependent: :destroy
+	has_one :payment_method , dependent: :destroy
 
 	#scope :is_email_verified, where(email_verified: true)
 	#scope :is_number_verified, where(number_verified: true)

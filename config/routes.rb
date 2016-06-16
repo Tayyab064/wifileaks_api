@@ -6,7 +6,8 @@ Rails.application.routes.draw do
     get 'near' => 'wifis#near_wifis'
     resources :connections, only: [:index , :create]
     scope "connections" do
-      resources :ratings, only: [:create]
+      resources :ratings, only: [:create ]
+	get 'ratings/:wifi_id' => 'ratings#index'
     end
   end
 

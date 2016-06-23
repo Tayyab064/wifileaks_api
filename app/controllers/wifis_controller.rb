@@ -33,7 +33,7 @@ class WifisController < ApplicationController
 
 	def near_wifis
 		@wifis = Wifi.near([params[:lat],params[:long]] , 20, :units => :km)
-		render json: @wifis , status: :ok
+		render json: @wifis
 	end
 
 

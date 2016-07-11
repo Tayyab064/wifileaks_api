@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :restrict_access, except: [:create , :wifi_user]
+	before_filter :restrict_access, except: [:create]
 
 	def index
 		render json: @current_user

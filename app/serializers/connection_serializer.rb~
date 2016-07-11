@@ -1,6 +1,6 @@
 class ConnectionSerializer < ActiveModel::Serializer
-  attributes :id , :wifi_name , :connected_at , :disconnected_at , :bill
-  has_one :rating
+  attributes :id , :wifi_name , :connected_at , :disconnected_at , :bill , :rating
+
   def wifi_name
   	object.wifi.name
   end
@@ -21,5 +21,9 @@ class ConnectionSerializer < ActiveModel::Serializer
     unless object.download_data.nil?
      (object.download_data * 0.8) + (object.upload_data * 1.2)
     end
+  end
+
+  def rating
+  	object.rating.rate
   end
 end

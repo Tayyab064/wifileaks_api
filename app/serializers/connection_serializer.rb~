@@ -19,7 +19,7 @@ class ConnectionSerializer < ActiveModel::Serializer
 
   def bill
     unless object.download_data.nil?
-     (object.download_data * object.wifi.price) + (object.upload_data * object.wifi.price)
+     (object.download_data * object.wifi.price)/100
     end
   end
 

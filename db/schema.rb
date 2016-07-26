@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721055747) do
+ActiveRecord::Schema.define(version: 20160726075045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160721055747) do
     t.float    "download_data",   default: 0.0
     t.float    "upload_data",     default: 0.0
     t.datetime "connected_at"
+    t.integer  "total_bill",      default: 0
   end
 
   create_table "delayed_jobs", force: :cascade do |t|

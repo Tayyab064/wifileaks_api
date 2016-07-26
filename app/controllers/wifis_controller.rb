@@ -3,7 +3,7 @@ class WifisController < ApplicationController
 
 	def index
 		@wifis = @current_user.wifis
-		render json: @wifis
+		render json: @wifis , status: :ok
 	end
 
 	def create

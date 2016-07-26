@@ -18,9 +18,7 @@ class ConnectionSerializer < ActiveModel::Serializer
   end
 
   def bill
-    unless object.download_data.nil?
-     ((object.download_data * object.wifi.price)/100).round(2)
-    end
+    object.total_bill
   end
 
   def rating

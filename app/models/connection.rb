@@ -5,4 +5,12 @@ class Connection < ActiveRecord::Base
 	has_one :rating
 
 	validates_presence_of :connected_at , :disconnected_at , :download_data
+
+	after_create :calculate_bill
+
+
+	def calculate_bill
+		self.total_bill = ((self.download_data * self.wifi.price)/100).round(2)
+		self.save
+	end
 end

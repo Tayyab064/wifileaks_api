@@ -27,7 +27,7 @@ class WifiSerializer < ActiveModel::Serializer
   def data_usage
   	data = 0
   	object.connections.each do |dat|
-		unless rat.download_data.nil?
+		unless dat.download_data.nil?
   			data = data + ( dat.download_data )
 		end
   	end

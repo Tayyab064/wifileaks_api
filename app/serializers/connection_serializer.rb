@@ -23,7 +23,7 @@ class ConnectionSerializer < ActiveModel::Serializer
 
   def rating
 	count = 0
-	if object.rating.nil?
+	unless object.rating.nil?
   		count = object.rating.rate
 	end
 	count

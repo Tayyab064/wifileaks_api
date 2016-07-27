@@ -41,8 +41,7 @@ class UsersController < ApplicationController
 		count = 0
 		wifi.connections.each do |conn|
 			name = conn.user.first_name + " " + conn.user.last_name
-			bill = (conn.download_data * 0.8) + (conn.upload_data * 1.2)
-			h.push({'name' => name , 'rating' => 'conn.rating.rate' , 'rate' => bill})	
+			h.push({'name' => name , 'rating' => conn.rating.rate , 'bill' => conn.total_bill})	
 			count = count + 1
 		end
 		render json: h , status: :ok

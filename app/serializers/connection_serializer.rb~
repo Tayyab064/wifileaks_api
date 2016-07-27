@@ -22,10 +22,10 @@ class ConnectionSerializer < ActiveModel::Serializer
   end
 
   def rating
+	count = 0
 	if object.rating.nil?
-		0	
-	else
-  		object.rating.rate
+  		count = object.rating.rate
 	end
+	count
   end
 end

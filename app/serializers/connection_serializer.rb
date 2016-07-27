@@ -22,7 +22,9 @@ class ConnectionSerializer < ActiveModel::Serializer
   end
 
   def rating
-	unless object.rating.nil?
+	if object.rating.nil?
+		0	
+	else
   		object.rating.rate
 	end
   end

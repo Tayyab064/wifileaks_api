@@ -20,7 +20,8 @@ class WifiSerializer < ActiveModel::Serializer
   	end
 	if ra != 0 && count != 0
   		(ra.to_f()/count).round(1)
-
+	else
+		0
 	end
   end
 

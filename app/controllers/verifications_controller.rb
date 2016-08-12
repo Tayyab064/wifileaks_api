@@ -32,7 +32,7 @@ class VerificationsController < ApplicationController
 				token.save
 				#render json:{'message' => 'Thank you for verifying your email.'},status: :ok
 				#render html: '<h3 style="text-align=center">Thank you for verifying your email.</h3>'.html_safe, status: :ok
-				redirect_to 'http://wifiexplore.com'
+				redirect_to '/email_confirmation.html'
 			end
 		else
 			render json: {'message' => 'Invalid email verification token.'},status: :unauthorized

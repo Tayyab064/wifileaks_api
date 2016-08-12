@@ -10,7 +10,7 @@ class Connection < ActiveRecord::Base
 
 
 	def calculate_bill
-		self.total_bill = ((self.download_data * self.wifi.price)/100).round(2)
+		self.total_bill = ((self.download_data * self.wifi.price)).round(2)
 		self.save
 	end
 end

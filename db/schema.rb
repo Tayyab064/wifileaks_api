@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726075045) do
+ActiveRecord::Schema.define(version: 20160812070129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20160726075045) do
     t.float    "download_data",   default: 0.0
     t.float    "upload_data",     default: 0.0
     t.datetime "connected_at"
-    t.integer  "total_bill",      default: 0
+    t.float    "total_bill",      default: 0.0
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -110,11 +110,11 @@ ActiveRecord::Schema.define(version: 20160726075045) do
     t.string   "name"
     t.string   "password"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "ssid"
     t.string   "security_type"
-    t.integer  "price"
+    t.float    "price",         default: 0.0
   end
 
   add_index "wifis", ["user_id"], name: "index_wifis_on_user_id", using: :btree

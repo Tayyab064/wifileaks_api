@@ -36,6 +36,14 @@ class WifisController < ApplicationController
 		render json: @wifis
 	end
 
+	def search
+		if params[:atn].present?
+			render json: {'message' => 'Phr kbhi kare ge!'} , status: :ok
+		else
+			render json: {'message' => 'Params missing!'} , status: :unprocessable_entity
+		end
+	end
+
 
 	private
 	def wifi_params

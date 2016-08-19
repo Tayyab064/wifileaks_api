@@ -4,9 +4,10 @@ class Connection < ActiveRecord::Base
 
 	has_one :rating
 
-	validates_presence_of :connected_at , :disconnected_at , :download_data
+	validates_presence_of :connected_at
 
 	after_create :calculate_bill
+	#after_update :calculate_bill
 
 
 	def calculate_bill

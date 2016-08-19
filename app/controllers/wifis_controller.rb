@@ -47,10 +47,10 @@ class WifisController < ApplicationController
 
 	private
 	def wifi_params
-		params.require(:wifi).permit(:name , :address , :lat , :long , :password , :ssid , :security_type , :price)
+		params.require(:wifi).permit(:name , :address , :lat , :long , :password , :ssid , :security_type , :price , :avg_speed)
 	end
 
 	def wifi_update_params
-		params.require(:wifi).permit(:name , :password , :price)
+		params.require(:wifi).permit(:name , :password , :price , :avg_speed)
 	end
 end

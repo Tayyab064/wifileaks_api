@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812092122) do
+ActiveRecord::Schema.define(version: 20160819094331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,10 +86,11 @@ ActiveRecord::Schema.define(version: 20160812092122) do
     t.string   "email"
     t.string   "mobile_number"
     t.string   "password_digest"
-    t.boolean  "email_verified",  default: false
-    t.boolean  "number_verified", default: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "email_verified",          default: false
+    t.boolean  "number_verified",         default: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "terminated_successfully", default: true
   end
 
   create_table "verifications", force: :cascade do |t|
@@ -115,6 +116,7 @@ ActiveRecord::Schema.define(version: 20160812092122) do
     t.string   "ssid"
     t.string   "security_type"
     t.float    "price",         default: 0.0
+    t.integer  "avg_speed"
   end
 
   add_index "wifis", ["user_id"], name: "index_wifis_on_user_id", using: :btree

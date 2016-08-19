@@ -1,6 +1,6 @@
 class ConnectionsController < ApplicationController
 	before_filter :restrict_access
-	before_action :set_connection , only: [:destroy , :rate]
+	before_action :set_connection , only: [:destroy , :rate , :update]
 
 	def index
 		@connect = @current_user.connections
@@ -11,10 +11,19 @@ class ConnectionsController < ApplicationController
 		@connection = Connection.create(connection_params)
 		@connection.user_id = @current_user.id
 		if @connection.save
+			@current_user.update(:terminated_successfully => false)
 			render json: @connection ,  status: :created
 		else
 			render json: @connection.errors , status: :unprocessable_entity
 		end
+	end
+
+	def update
+		@connect.update(connection_update_params)
+		bil = ((@connect.download_data * @connect.wifi.price)/100).round(2)
+		@connect.update(total_bill: bil)
+		@connect.user.update(terminated_successfully: true)
+		render json: @connect , status: :ok
 	end
 
 	/def destroy
@@ -44,7 +53,11 @@ class ConnectionsController < ApplicationController
 
 	private
 	def connection_params
-		params.require(:connection).permit(:wifi_id , :download_data , :upload_data , :connected_at , :disconnected_at)
+		params.require(:connection).permit(:wifi_id , :connected_at)
+	end
+
+	def connection_update_params
+		params.require(:connection).permit(:download_data , :upload_data , :disconnected_at)
 	end
 
 	def set_connection

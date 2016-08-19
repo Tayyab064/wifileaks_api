@@ -1,5 +1,5 @@
 class WifiSerializer < ActiveModel::Serializer
-  attributes :id , :lat , :long , :address , :name , :ssid , :security_type , :password , :price , :data_usage , :earning , :no_of_users , :rating
+  attributes :id , :lat , :long , :address , :name , :ssid , :security_type , :password , :price , :avg_speed , :data_usage , :earning , :no_of_users , :rating
 
   def earning
   	pri = 0

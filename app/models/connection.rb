@@ -6,7 +6,7 @@ class Connection < ActiveRecord::Base
 
 	validates_presence_of :connected_at
 
-	after_create :calculate_bill
+	#after_create :calculate_bill
 	#after_update :calculate_bill
 
 

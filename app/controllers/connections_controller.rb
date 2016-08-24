@@ -19,6 +19,7 @@ class ConnectionsController < ApplicationController
 	end
 
 	def update
+		p params
 		@connect.update(connection_update_params)
 		bil = ((@connect.download_data * @connect.wifi.price)/100).round(2)
 		@connect.update(total_bill: bil)

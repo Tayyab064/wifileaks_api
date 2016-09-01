@@ -6,7 +6,7 @@ class WifiSerializer < ActiveModel::Serializer
   	object.connections.each do |con|
   		pri =  pri + con.total_bill
   	end
-  	pri
+  	pri.round(2)
   end
 
   def rating

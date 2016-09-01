@@ -18,7 +18,7 @@ class ConnectionSerializer < ActiveModel::Serializer
   end
 
   def bill
-    object.total_bill
+    object.total_bill.round(2)
   end
 
   def rating

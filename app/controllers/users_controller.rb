@@ -27,7 +27,14 @@ class UsersController < ApplicationController
 		end
 	end
 
-	
+	def termin_successfully
+		@user = @current_user
+		if @user.update(terminated_successfully: true)
+		  render json: @user, serializer: UserTokenSerializer , status: :accepted
+		else
+		  render json: @user.errors, status: :unprocessable_entity
+		end
+	end
 
 	def destroy
 		@user = @current_user

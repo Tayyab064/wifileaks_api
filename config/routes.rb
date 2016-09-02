@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     patch 'payment_methods' => 'payment_methods#update'
     put 'bank_information' => 'bank_information#update'
     patch 'bank_information' => 'bank_information#update'
+    get 'terminate' => 'users#termin_successfully'
   end
 
   scope "connections" do

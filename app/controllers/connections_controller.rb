@@ -23,7 +23,7 @@ class ConnectionsController < ApplicationController
 		@connect.update(connection_update_params)
 		bil = ((@connect.download_data * @connect.wifi.price)/100).round(2)
 		@connect.update(total_bill: bil)
-		@connect.user.update(terminated_successfully: true)
+		@current_user.update(terminated_successfully: true)
 		render json: @connect , status: :ok
 	end
 

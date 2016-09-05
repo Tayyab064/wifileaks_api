@@ -4,12 +4,16 @@ class SessionController < ApplicationController
   def create
 
     if  user=User.find_by_email(params[:email])
-      if user.authenticate(params[:password])
-        @current_user = user
-        @current_user.create_api_key
-        render json: @current_user,serializer: UserTokenSerializer, status: :ok
+      if user.blocked
+        render json: {'message' => "You are not authorized to signin"} , status: :unauthorized
       else
-        render json:{'error' => "Password issue"}, status: :unauthorized
+        if user.authenticate(params[:password])
+          @current_user = user
+          @current_user.create_api_key
+          render json: @current_user,serializer: UserTokenSerializer, status: :ok
+        else
+          render json:{'error' => "Password issue"}, status: :unauthorized
+        end
       end
     else
       render json:{'error' => "User doesn't exists"}, status: :unauthorized

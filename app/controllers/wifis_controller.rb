@@ -32,7 +32,7 @@ class WifisController < ApplicationController
 	end
 
 	def near_wifis
-		@wifis = Wifi.near([params[:lat],params[:long]] , 20, :units => :km)
+		@wifis = Wifi.where(blocked: false).near([params[:lat],params[:long]] , 20, :units => :km)
 		render json: @wifis
 	end
 

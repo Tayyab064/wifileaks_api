@@ -33,6 +33,16 @@ class PaymentMethodsController < ApplicationController
 		end
 	end
 
+	def delete
+		if @current_user.payment_method.present?
+			pay = @current_user.payment_method
+			pay.destroy
+			head :no_content
+		else
+			render json: {'message' => 'Payment Method Missing'} , status: :unprocessable_entity
+		end
+	end
+
 	private
 	def payment_params
 		params.require(:payment_method).permit(:card_number , :expiry , :cvn)

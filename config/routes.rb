@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   scope "user" do
-    resources :payment_methods, only: [:create , :index ]
+    resources :payment_methods, only: [:create , :index , :delete]
     resources :bank_information, only: [:create , :index ]
     post 'signin' => 'session#create'
     post 'signout' => 'session#destroy'

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   scope "user" do
-    resources :payment_methods, only: [:create , :index , :delete]
+    resources :payment_methods, only: [:create , :index ]
     resources :bank_information, only: [:create , :index ]
     post 'signin' => 'session#create'
     post 'signout' => 'session#destroy'
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     end
     put 'payment_methods' => 'payment_methods#update'
     patch 'payment_methods' => 'payment_methods#update'
+    delete 'payment_methods' => 'payment_methods#delete'
     put 'bank_information' => 'bank_information#update'
     patch 'bank_information' => 'bank_information#update'
     get 'terminate' => 'users#termin_successfully'

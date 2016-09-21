@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 				ratin = 0
 			end
 			name = conn.user.first_name + " " + conn.user.last_name
-			h.push({'name' => name , 'rating' => ratin , 'bill' => conn.total_bill})	
+			h.push({'name' => name , 'rating' => ratin , 'bill' => conn.total_bill , 'picture' => conn.user.picture })	
 			count = count + 1
 		end
 		render json: h , status: :ok

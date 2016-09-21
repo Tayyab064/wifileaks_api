@@ -59,6 +59,16 @@ class UsersController < ApplicationController
 		render json: h , status: :ok
 	end
 
+	def set_picture
+		if params[:picture].present?
+			user = @current_user
+			user.update(picture: params[:picture])
+			render json: user , status: :ok
+		else
+			render json: {'message' => 'Picture Missing!'} , status: :unprocessable_entity
+		end
+	end
+
 
 	private
 

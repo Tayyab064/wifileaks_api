@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     patch 'update' => 'users#update'
     delete 'delete' => 'users#update'
     post 'forgot_password' => 'session#forgot_password'
+    put 'update_password' => 'users#update_password'
     get 'email' => 'verifications#resend_email_confirmation'
     get 'reset_password/:forgot_password_token' => 'verifications#reset_password'
     scope "verify" do

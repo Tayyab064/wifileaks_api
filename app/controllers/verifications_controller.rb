@@ -82,9 +82,11 @@ class VerificationsController < ApplicationController
 	end
 
 	def reset_password
+		p params
 		if token = Verification.find_by_forgot_password_token(params[:forgot_password_token])
 			@user = token.user
-			redirect_to '/reset_password.html'
+			addre = '/reset_password.html?token=' + params[:forgot_password_token]
+			redirect_to addre
 		else
 			render json: {'message' => "Invalid forgot password token"}, status: :unauthorized
 		end

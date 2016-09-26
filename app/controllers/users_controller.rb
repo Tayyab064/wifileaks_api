@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :restrict_access, except: [:create]
+	before_filter :restrict_access, except: [:create , :update_password]
 
 	def index
 		render json: @current_user
@@ -66,6 +66,23 @@ class UsersController < ApplicationController
 			render json: user , status: :ok
 		else
 			render json: {'message' => 'Picture Missing!'} , status: :unprocessable_entity
+		end
+	end
+
+	def update_password
+		p params
+		if params[:token].present?
+			veri = Verification.where(forgot_password_token: params[:token])
+			if veri.count > 0
+				user = veri.first.user
+				user.update(password: params[:password])
+				veri.first.update(forgot_password_token: nil)
+				render json: {'message' => 'Password Successfully updated' } , status: :ok
+			else
+				render json: {'message' => "Invalid reset password token" } , status: :unauthorized
+			end
+		else
+			render json: {'message' => "Invalid reset password token" } , status: :unauthorized
 		end
 	end
 

@@ -6,7 +6,7 @@ class VerificationsController < ApplicationController
 		if token = Verification.find_by_mob_verification_code(params[:mobile_token])
 			user = token.user
 			user.update_attribute(:number_verified, true)
-			token.destroy
+			token.update(mob_verification_code: nil)
 			render json: user ,status: :ok
 			#render html: '<h3 style="text-align: center">Thank you for verifying your mobile number.</h3>'
 			return

@@ -32,16 +32,20 @@ class SessionController < ApplicationController
 
   def forgot_password
     if @user = User.find_by_email(params[:email])
-      current_user = @user.verification
-      begin
-        password_token = SecureRandom.hex.to_s
-        current_user.forgot_password_token = password_token
-      end while current_user.class.exists?(forgot_password_token: password_token)
-      current_user.save
-      UserMailer.reset_password_temp(@user).deliver_later
-      render json: {'message' => 'Kindly check your mailbox'} , status: :ok
+      if @user.verification.present?
+        current_user = @user.verification
+        begin
+          password_token = SecureRandom.hex.to_s
+          current_user.forgot_password_token = password_token
+        end while current_user.class.exists?(forgot_password_token: password_token)
+        current_user.save
+        UserMailer.reset_password_temp(@user).deliver_later
+        render json: {'message' => 'Kindly check your mailbox'} , status: :ok
+      else
+        render json: {"error" => "Can't reset password"}, status: :unprocessable_entity
+      end
     else
-      render json: {'error' => "Invalid email"}, status: :unauthorized
+      render json: {"error" => "Invalid email"}, status: :unauthorized
     end
   end
 end

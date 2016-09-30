@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     patch 'bank_information' => 'bank_information#update'
     get 'terminate' => 'users#termin_successfully'
     post 'set_picture' => 'users#set_picture'
+    post 'withdraw' => 'bank_information#pay_lenders'
+    get 'check_amount' => 'amount_withdraw#return_amount'
   end
 
   scope "connections" do

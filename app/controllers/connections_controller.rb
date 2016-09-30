@@ -20,10 +20,21 @@ class ConnectionsController < ApplicationController
 
 	def update
 		p params
+		as = @connect.disconnected_at.nil?
 		@connect.update(connection_update_params)
 		bil = ((@connect.download_data * @connect.wifi.price)/100).round(2)
 		@connect.update(total_bill: bil)
 		@current_user.update(terminated_successfully: true)
+		if as
+			p "Disconnected At nil"
+			if @connect.wifi.present? && @connect.wifi.user.present? && @connect.wifi.user.amount.present?
+				amo = @connect.wifi.user.amount
+				as = amo.amount + bil
+				amo.update(amount: as)
+			else
+				Amount.create(amount: bil , user_id: @connect.wifi.user.id)
+			end
+		end
 		render json: @connect , status: :ok
 	end
 

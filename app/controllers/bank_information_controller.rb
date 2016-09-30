@@ -33,6 +33,27 @@ class BankInformationController < ApplicationController
 		end
 	end
 
+	def pay_lenders
+		if @current_user.bank_information.present?
+			if(params[:amount]).present? && @current_user.amount.present?
+				withdraw = @current_user.amount
+				if(withdraw.amount >= params[:amount].to_f)
+					c = Withdraw.create(amount: params[:amount] , user_id: @current_user.id)
+					tem = withdraw.amount - params[:amount].to_f
+					withdraw.update(amount: tem)
+					render json: {'message' => 'Amount will be transfered to your bank account with in 7 working days!'} , status: :accepted
+				else
+					ast = 'Withdraw upto ' + withdraw.amount.to_s
+					render json: {'message' => ast } , status: :unprocessable_entity
+				end
+			else
+				render json: {'message' => 'Amount Missing!'} , status: :unprocessable_entity
+			end
+		else
+			render json: {'message' => 'Bank Information Missing!'} , status: :unprocessable_entity
+		end
+	end
+
 	private
 	def bankinfo_params
 		params.require(:bank_information).permit(:currency , :country , :name , :routing_number , :account_number)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921051058) do
+ActiveRecord::Schema.define(version: 20160930103621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20160921051058) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "amounts", force: :cascade do |t|
+    t.integer  "amount",     default: 0
+    t.integer  "user_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "api_keys", force: :cascade do |t|
     t.string   "token"
@@ -141,6 +148,14 @@ ActiveRecord::Schema.define(version: 20160921051058) do
   end
 
   add_index "wifis", ["user_id"], name: "index_wifis_on_user_id", using: :btree
+
+  create_table "withdraws", force: :cascade do |t|
+    t.integer  "amount",     default: 0
+    t.boolean  "transfered", default: false
+    t.integer  "user_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   add_foreign_key "api_keys", "users"
   add_foreign_key "verifications", "users"

@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 	has_many :connections , dependent: :destroy
 	has_one :payment_method , dependent: :destroy
 	has_one :bank_information , dependent: :destroy
+	has_many :withdraws , dependent: :destroy
+	has_one :amount , dependent: :destroy
 
 	#scope :is_email_verified, where(email_verified: true)
 	#scope :is_number_verified, where(number_verified: true)

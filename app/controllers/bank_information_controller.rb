@@ -27,7 +27,7 @@ class BankInformationController < ApplicationController
 		if @current_user.bank_information.present?
 			@bankinfo = @current_user.bank_information
 			@bankinfo.update(bankinfo_params)
-			render json: {'message' => 'Bank Information Successfully Updated!'} , status: :accepted
+			render json: @bankinfo , status: :accepted
 		else
 			render json: {'message' => 'Bank Information not present!'} , status: :unprocessable_entity
 		end

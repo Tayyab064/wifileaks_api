@@ -41,7 +41,8 @@ class BankInformationController < ApplicationController
 					c = Withdraw.create(amount: params[:amount] , user_id: @current_user.id)
 					tem = withdraw.amount - params[:amount].to_f
 					withdraw.update(amount: tem)
-					render json: {'message' => 'Amount will be transfered to your bank account with in 7 working days!'} , status: :accepted
+					mes = params[:amount] + ' will be transfered to your bank account with in 7 working days!'
+					render json: {'amount' => tem} , status: :accepted
 				else
 					ast = 'Withdraw upto ' + withdraw.amount.to_s
 					render json: {'message' => ast } , status: :unprocessable_entity

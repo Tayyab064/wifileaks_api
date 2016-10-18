@@ -48,4 +48,5 @@ class SessionController < ApplicationController
       render json: {"error" => "Invalid email"}, status: :unauthorized
     end
   end
+
 end

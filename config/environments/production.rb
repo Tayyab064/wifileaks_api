@@ -32,8 +32,8 @@ Rails.application.configure do
   :domain => 'www.wifiexplore.com',
   :authentication => :plain,   # I've also tried :login
   :enable_starttls_auto => true,  # Also tried tls => true
-  :user_name => ENV['EMAIL_USERNAME'],
-  :password => ENV['EMAIL_PASSWORD'],
+  :user_name => 'noreply@wifiexplore.com',
+  :password => 'AG@pass1',
   :openssl_verify_mode => 'none'
   } #I've also tried having the attribute :domain =>
 

@@ -55,8 +55,8 @@ class VerificationsController < ApplicationController
 			to = @current_user.mobile_number
 
 
-			account_sid = 'AC89e76904587c00d004e844faed1a3962' 
-			auth_token = 'c17364061e4f9e0ef54b2a688a07d982' 
+			account_sid = ENV['TW_SID']
+			auth_token = ENV['TW_TOKEN']
 
 			@twilio_client = Twilio::REST::Client.new account_sid, auth_token
 			@twilio_client.account.sms.messages.create(

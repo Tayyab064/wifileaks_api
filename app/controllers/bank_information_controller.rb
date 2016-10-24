@@ -57,6 +57,6 @@ class BankInformationController < ApplicationController
 
 	private
 	def bankinfo_params
-		params.require(:bank_information).permit(:currency , :country , :name , :routing_number , :account_number)
+		params.require(:bank_information).permit(:currency , :country , :name , :routing_number , :account_number , :flag)
 	end
 end

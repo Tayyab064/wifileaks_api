@@ -16,6 +16,12 @@ class UserMailer < ApplicationMailer
     	@url  = 'https://wifi-api.herokuapp.com'
     	mail(to: @user.email, subject: 'WifiExplore' )
 	end
+
+	def mobile_confirmation(user)
+		user = user
+    	url  = 'https://wifi-api.herokuapp.com'
+    	mail(to: user.email, subject: 'WifiExplore' )
+	end
 end
 
 #https://wifi-api.herokuapp.com/user/verify/email/'+ @user.verification.email_token

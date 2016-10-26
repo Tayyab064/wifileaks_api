@@ -9,6 +9,7 @@ class VerificationsController < ApplicationController
 			token.update(mob_verification_code: nil)
 			render json: user ,status: :ok
 			#render html: '<h3 style="text-align: center">Thank you for verifying your mobile number.</h3>'
+			UserMailer.mobile_confirmation(user).deliver_later
 			return
 	    else
 			render json:{'message' => 'Invalid mobile verification code.'},status: :unauthorized

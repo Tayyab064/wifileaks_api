@@ -34,6 +34,8 @@ class ConnectionsController < ApplicationController
 			else
 				Amount.create(amount: bil , user_id: @connect.wifi.user.id)
 			end
+			#email user
+			UserMailer.connection_finished(@current_user , @connect).deliver_later
 		end
 		render json: @connect , status: :ok
 	end

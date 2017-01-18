@@ -22,6 +22,13 @@ class UserMailer < ApplicationMailer
     	url  = 'https://wifi-api.herokuapp.com'
     	mail(to: user.email, subject: 'WifiExplore' )
 	end
+
+	def connection_finished(user , conn)
+		user = user
+		@conne = conn
+    	url  = 'https://wifi-api.herokuapp.com'
+    	mail(to: user.email, subject: 'WifiExplore' )
+	end
 end
 
 #https://wifi-api.herokuapp.com/user/verify/email/'+ @user.verification.email_token

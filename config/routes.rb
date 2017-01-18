@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :connections, only: [:index , :create , :update]
     scope "connections" do
       resources :ratings, only: [:create ]
-	get 'ratings/:wifi_id' => 'ratings#index'
+	    get 'ratings/:wifi_id' => 'ratings#index'
     end
   end
 

@@ -93,12 +93,12 @@
                     <table>
                         <tr>
                             <td class="title">
-                                WifiExplore<img src="http://wifiexplore.com/wp-content/uploads/2017/01/website-logo-6.png?quality=100.3016082509161" style="width:100%; max-width:300px;">
+                                WifiExplore<!-- <img src="http://wifiexplore.com/wp-content/uploads/2017/01/website-logo-6.png?quality=100.3016082509161" style="width:100%; max-width:300px;"> -->
                             </td>
                             
                             <td>
                                 Invoice #: <%= @conne.id %><br>
-                                Created: <%= @conne.connected_at.strftime("%B  %d, %Y") %>
+                                <%= @conne.connected_at.strftime("%B  %d, %Y") %>
                             </td>
                         </tr>
                     </table>
@@ -115,7 +115,7 @@
                                 <%= wif.avg_speed %> MB
                             </td>
                             
-                            <td>
+                            <td style="float: right;text-align: right;">
                                 <% user = @conne.user %>
                                 <%= user.first_name + user.last_name%><br>
                                 <%= user.mobile_number %><br>
